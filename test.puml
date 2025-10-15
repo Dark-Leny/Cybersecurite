@@ -1,0 +1,71 @@
+@startuml gestion_scolaire
+left to right direction
+
+
+' Application de gestion scolaire
+
+/'
+
+Diagramme de cas
+d'utilisation
+
+'/
+
+title Applicationde gestion scolaire
+
+package Étudiant {
+	actor "Étudiant en BTS SIO SLAM" as etudiant_bts_sio_slam
+	actor "Étudiant en BTS SIO SISR" as etudiant_bts_sio_sisr
+	actor "Étudiant en BTS Assurance" as etudiant_bts_assurance
+}
+
+package Élève {
+	actor "Élève STMG seconde" as eleve_stmg_seconde
+	actor "Élève STMG première" as eleve_stmg_premiere
+	actor "Élève STMG terminale" as eleve_stmg_terminale
+}
+
+package Enseignant {
+	actor "Enseignant en BTS SIO SLAM" as enseignant_bts_sio_slam
+	actor "Enseignant en BTS SIO SISR" as enseignant_bts_sio_sisr
+	actor "Enseignant en BTS Assurance" as enseignant_bts_assurance
+	actor "Enseignant STMG" as enseignant_stmg
+}
+
+actor Administrateur
+
+rectangle "Système de gestion scolaire" {
+
+    usecase "Consulter les notes" as UC1_consulter_notes
+    usecase "Déposer un devoir" as UC2
+    usecase "Saisir les notes" as UC3
+    usecase "Gérer les utilisateurs" as UC4
+
+}
+
+etudiant_bts_sio_slam --> UC1
+etudiant_bts_sio_sisr --> UC1
+etudiant_bts_assurance --> UC1
+eleve_stmg_seconde --> UC1
+eleve_stmg_premiere --> UC1
+eleve_stmg_terminale --> UC1
+
+etudiant_bts_sio_slam --> UC2
+etudiant_bts_sio_sisr --> UC2
+etudiant_bts_assurance --> UC2
+eleve_stmg_seconde --> UC2
+eleve_stmg_premiere --> UC2
+eleve_stmg_terminale --> UC2
+
+enseignant_bts_sio_slam --> UC1
+enseignant_bts_sio_sisr --> UC1
+enseignant_bts_assurance --> UC1
+enseignant_stmg --> UC1
+
+
+
+admin --> UC4
+
+
+
+@enduml
