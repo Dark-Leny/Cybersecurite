@@ -1,42 +1,35 @@
-@@startuml Gestion_Scolaire
-' top to bottom direction
+@startuml gestion_scolaire
 left to right direction
+
+' Application de gestion scolaire
+
+/'
+
+Diagramme de cas
+d'utilisation
+
+'/
 
 title Application de gestion scolaire
 
-' actor "Etudiant en BTS SIO" as Etudiant
-' actor "Professeur référent" as Professeur
-' actor "Administrateur système" as Admin
-
-' usecase "Consulter les notes" as uc1
-' usecase "Déposer un devoir" as uc2
-' usecase "Saisir les notes" as uc3
-' usecase "Gérer les utilisateurs" as uc4
-
-' rectangle "Système de gestion scolaire" {
-' }
-
-' Etudiant --> uc1
-' Etudiant --> uc2
-' Professeur --> uc1
-' Professeur --> uc3
-' Admin --> uc4
-
-'title Application de gestion scolaire'
-
-/'Diagramme de cas d'utilisation
-'/
+actor "Utilisateur" as user
 
 package Étudiant {
 	actor "Étudiant en BTS SIO SLAM" as etudiant_bts_sio_slam
 	actor "Étudiant en BTS SIO SISR" as etudiant_bts_sio_sisr
 	actor "Étudiant en BTS Assurance" as etudiant_bts_assurance
+	user <|-- etudiant_bts_sio_slam
+	user <|-- etudiant_bts_sio_sisr
+	user <|-- etudiant_bts_assurance
 }
 
 package Élève {
 	actor "Élève STMG seconde" as eleve_stmg_seconde
 	actor "Élève STMG première" as eleve_stmg_premiere
 	actor "Élève STMG terminale" as eleve_stmg_terminale
+	user <|-- eleve_stmg_seconde
+	user <|-- eleve_stmg_premiere
+	user <|-- eleve_stmg_terminale
 }
 
 package Enseignant {
@@ -44,16 +37,30 @@ package Enseignant {
 	actor "Enseignant en BTS SIO SISR" as enseignant_bts_sio_sisr
 	actor "Enseignant en BTS Assurance" as enseignant_bts_assurance
 	actor "Enseignant STMG" as enseignant_stmg
+	user <|-- enseignant_bts_sio_slam
+	user <|-- enseignant_bts_sio_sisr
+	user <|-- enseignant_bts_assurance
+	user <|-- enseignant_stmg
 }
 
-actor Administrateur
+package Administrateur {
+	actor "Proviseur Adjoint" as proviseur_adjoint
+	actor "Agent CPE" as agent_cpe
+	actor "Administrateur" as admin
+	user <|-- proviseur_adjoint
+	user <|-- agent_cpe
+	user <|-- admin
+}
+
 
 rectangle "Système de gestion scolaire" {
 
-    usecase "Consulter les notes" as UC1_consulter_notes
+    usecase "Consulter les notes" as UC1
     usecase "Déposer un devoir" as UC2
     usecase "Saisir les notes" as UC3
     usecase "Gérer les utilisateurs" as UC4
+	usecase "Se connecter" as UC5
+	usecase "Imprimer les notes" as UC6
 
 }
 
@@ -77,8 +84,22 @@ enseignant_bts_assurance --> UC1
 enseignant_stmg --> UC1
 
 
-
 admin --> UC4
+proviseur_adjoint --> UC4
+agent_cpe --> UC4
 
+UC1 .left.> UC5 : <<include>>
+UC2 .left.> UC5 : <<include>>
+UC3 .left.> UC5 : <<include>>
+UC4 .left.> UC5 : <<include>>
 
-@@enduml
+UC1 .right.> UC6 : <<extend>>
+
+legend right
+= Légende du Diagramme
+* etudiant_bts_sio_slam : représente tout étudiant en BTS SIO en option SLAM (Solutions Logiciels et Applications Métiers).
+* etudiant_bts_sio_sisr : représente tout étudiant en BTS SIO en option SISR (solutions d'Infrastructure Systèmes et Réseaux).
+* etudiant_bts_assurance : représente tout étudiant en BTS Assurance.
+end legend
+
+@enduml
